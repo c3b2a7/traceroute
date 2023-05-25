@@ -13,7 +13,7 @@ func byteSliceOfSize(buf []byte, n int) []byte {
 	}
 	b := make([]byte, padding)
 	for i := 0; i < padding; i++ {
-		b[i] = 1
+		b[i] = 0xff
 	}
 	return append(buf, b...)
 }
@@ -98,7 +98,7 @@ func Traceroute(target *net.IPAddr, recvCh chan<- *TracerouteHop, option ...Perf
 
 		// receive reply
 		recvConn.SetReadDeadline(time.Now().Add(options.timeout))
-		var recvBuf = make([]byte, options.packetSize)
+		var recvBuf = make([]byte, 1500)
 		n, from, err := recvConn.ReadFrom(recvBuf)
 		elapsed := time.Since(start)
 
